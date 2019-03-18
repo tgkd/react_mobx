@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "moduleResolution": "node",
+        "target": "es5",
+        "jsx": "react",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "sourceMap": true,
+        "allowSyntheticDefaultImports": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "strict": true,
+        "importHelpers": true,
+        "strictNullChecks": true,
+        "keyofStringsOnly": true, // https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes#typescript-29
+        "strictPropertyInitialization": false,
+        "lib": ["dom", "es6", "es2017.object"],
+        "module": "esnext",
+        "paths": {
+            "src/*": ["./src/*"],
+            "components/*": ["./src/components/*"],
+            "pages/*": ["./src/components/pages/*"],
+            "shared/*": ["./src/components/shared/*"],
+            "constants": ["./src/constants"],
+            // Fix "Duplicate identifier" errors caused by multiple dependencies fetching their own copies of type definitions.
+            // We tell TypeScript which type definitions module to treat as the canonical one (instead of combining all of them).
+            "react": ["./node_modules/@types/react/index"],
+            "lodash/*": ["node_modules/@types/lodash-es/*"]
+        }
+    },
+    "exclude": ["bin", "node_modules"]
+}
