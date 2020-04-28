@@ -1,5 +1,3 @@
-import { SelectValue } from "antd/lib/select";
-
 export const ApiStoreId = Symbol("ApiStore");
 
 export interface IApiStore {

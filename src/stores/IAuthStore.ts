@@ -6,6 +6,7 @@ export interface IAuthStore {
     readonly signedIn: boolean;
     readonly initialized: boolean;
     readonly currentUser: IAuthUser | undefined;
+    readonly error: Error | undefined;
 
     init(): Promise<any>;
     getAndApplyUser(): Promise<IAuthUser | undefined>;

@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import * as React from "react";
 
 import DefaultPage from "src/components/pages/DefaultPage";
-import { Title } from "src/components/pages/HomePage/styled";
+import { Title, LoginButton } from "src/components/pages/HomePage/styled";
 import { lazyInject } from "src/di";
 import { AuthStoreId, IAuthStore } from "src/stores/IAuthStore";
 
@@ -20,7 +20,7 @@ export default class HomePage extends React.Component {
         return (
             <DefaultPage>
                 <Title>User is {signedIn ? "" : "not"} signed in</Title>
-                <button onClick={this.handleApiTestClick}>Do fake API call</button>
+                <LoginButton onClick={this.handleApiTestClick}>TestAuth</LoginButton>
                 {progressText}
             </DefaultPage>
         );

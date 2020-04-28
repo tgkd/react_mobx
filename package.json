@@ -6,7 +6,7 @@
   "scripts": {
     "cleandist": "rimraf ./dist",
     "build": "npm run cleandist && webpack --mode production && cpx web.config ./dist",
-    "start-dev-server": "webpack-dev-server --hot --mode development"
+    "dev": "webpack-dev-server --hot --mode development"
   },
   "author": "",
   "license": "ISC",

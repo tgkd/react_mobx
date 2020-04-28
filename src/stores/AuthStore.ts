@@ -21,8 +21,13 @@ export default class AuthStore implements IAuthStore {
     get initialized() {
         return this._initialized;
     }
+    @computed
+    get error() {
+        return this._error;
+    }
 
     @observable private _user: IAuthUser | undefined;
+    @observable private _error: Error | undefined;
     @observable private _initialized = false;
 
     @lazyInject(SettingsId) private readonly settings: ISettings;
@@ -50,23 +55,30 @@ export default class AuthStore implements IAuthStore {
     }
 
     public async getAndApplyUser() {
-        let oidcUser: oidc.User | undefined = await this.userManager.getUser();
+        try {
+            let oidcUser: oidc.User | undefined = await this.userManager.getUser();
 
-        if (!oidcUser || oidcUser.expired) {
-            oidcUser = await this.trySilentRenew();
             if (!oidcUser || oidcUser.expired) {
-                await this.userManager.signinRedirect();
-                oidcUser = undefined;
+                oidcUser = await this.trySilentRenew();
+                if (!oidcUser || oidcUser.expired) {
+                    await this.userManager.signinRedirect();
+                    oidcUser = undefined;
+                }
             }
+
+            const user = oidcUser ? new AuthUser(oidcUser) : undefined;
+
+            runInAction(() => {
+                this._user = user;
+            });
+
+            return user;
+        } catch (error) {
+            runInAction(() => {
+                this._error = error;
+            });
+            return;
         }
-
-        const user = oidcUser ? new AuthUser(oidcUser) : undefined;
-
-        runInAction(() => {
-            this._user = user;
-        });
-
-        return user;
     }
 
     public async handleSigninRedirectCallback() {

@@ -1,6 +1,5 @@
 // import axios from "axios";
 import { injectable } from "inversify";
-import { createHttpLink } from "apollo-link-http";
 
 import { IApiStore } from "src/stores/IApiStore";
 import { lazyInject } from "src/di";
